@@ -66,7 +66,7 @@ select nome, salario from colaborador where salario > 2000;
 select nome, data_nascimento from colaborador order by nome asc;
 
 -- 18 Exiba todas as informações dos colaboradores que nasceram antes de 2000.
-select * from colaborador where data_nascimento < '2000-01-01';
+select * from colaborador where data_nascimento < '2000-01-01' order by nome asc;
 
 -- 19 Exiba qual é o maior salário.
 select max(salario) as 'maior_salario' from colaborador;
