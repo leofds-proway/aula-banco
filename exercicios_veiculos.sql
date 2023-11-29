@@ -150,4 +150,22 @@ insert into veiculo_combustivel values (3,'lxg3147');
 select * from veiculo where nr_ano_fab >= 2010;
 
 -- 3 Exibir o número da placa e a descrição do modelo dos veículos.
-select nr_placa, ds_modelo from veiculo v inner join modelo m on v.cd_modelo = m.cd_modelo; 
+select nr_placa, ds_modelo from veiculo inner join modelo on veiculo.cd_modelo = modelo.cd_modelo;
+
+-- 4 Exibir a descrição dos modelos da marca volkswagem.
+select ds_modelo from modelo inner join marca on modelo.cd_marca = marca.cd_marca where ds_marca = 'volkswagem';
+select ds_modelo from modelo where cd_marca = (select cd_marca from marca where ds_marca = 'volkswagem');	-- sub-select
+
+-- 5 Exibir a descrição dos modelos das marcas citroen e peugeot.
+select ds_modelo from modelo inner join marca on modelo.cd_marca = marca.cd_marca where ds_marca in ('citroen','peugeot');
+
+-- 6 Exibir informações dos veículos cujo ano de fabricação e ano modelo são idênticos.
+select * from veiculo where nr_ano_fab = nr_ano_mod;
+
+-- 7 Exibir informações dos veículos cujo ano de fabricação e ano modelo são diferentes.
+select * from veiculo where nr_ano_fab <> nr_ano_mod;
+
+-- 8 Exibir o número da placa e a descrição do combustível de todos os veículos a gasolina.
+select nr_placa from veiculo_combustivel vc 
+	inner join combustivel c on vc.cd_combustivel = c.cd_combustivel
+    where c.ds_combustivel like 'gasolina';
