@@ -169,3 +169,34 @@ select * from veiculo where nr_ano_fab <> nr_ano_mod;
 select nr_placa from veiculo_combustivel vc 
 	inner join combustivel c on vc.cd_combustivel = c.cd_combustivel
     where c.ds_combustivel like 'gasolina';
+    
+-- 9 Exibir informações dos veículos (placa, descrição do modelo, descrição da marca, ano de fabricação e ano do modelo).
+select nr_placa, ds_modelo, ds_marca, nr_ano_fab, nr_ano_mod from veiculo v
+	inner join modelo mo on v.cd_modelo = mo.cd_modelo
+    inner join marca ma on mo.cd_marca = ma.cd_marca;
+    
+-- 10 Exibir informações dos veículos (placa, descrição do modelo, descrição da marca, ano
+-- de fabricação e ano do modelo) fabricados a partir de 2010 (inclusive).
+select nr_placa, ds_modelo, ds_marca, nr_ano_fab, nr_ano_mod from veiculo v
+	inner join modelo mo on v.cd_modelo = mo.cd_modelo
+    inner join marca ma on mo.cd_marca = ma.cd_marca
+    where nr_ano_fab >= 2010;
+    
+-- 11 Exibir informações dos veículos (descrição do modelo, descrição da marca, ano de
+-- fabricação e ano do modelo) fabricados a partir de 2010 (inclusive) e que são movidos
+-- a "diesel".
+select v.nr_placa, ds_modelo, ds_marca, nr_ano_fab, nr_ano_mod from veiculo v
+	inner join modelo mo on v.cd_modelo = mo.cd_modelo
+    inner join marca ma on mo.cd_marca = ma.cd_marca
+    inner join veiculo_combustivel vc on vc.nr_placa = v.nr_placa
+    inner join combustivel c on c.cd_combustivel = vc.cd_combustivel
+    where nr_ano_fab >= 2010 and c.ds_combustivel like 'diesel';
+
+-- 12 Exibir a idade média dos veículos cadastrados considerando o ano do modelo.
+select avg(2023-nr_ano_mod) from veiculo;
+    
+    
+    
+    
+    
+    
