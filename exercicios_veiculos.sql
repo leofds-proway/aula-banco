@@ -194,9 +194,15 @@ select v.nr_placa, ds_modelo, ds_marca, nr_ano_fab, nr_ano_mod from veiculo v
 
 -- 12 Exibir a idade média dos veículos cadastrados considerando o ano do modelo.
 select avg(2023-nr_ano_mod) from veiculo;
-    
-    
-    
-    
-    
+
+-- 13 Exibir a descrição dos modelos e das marcas dos veículos que apresentam a maior
+-- quantidade de veículos cadastrados na base de dados.
+select ds_modelo, ds_marca from veiculo ve
+	inner join modelo mo on ve.cd_modelo = mo.cd_modelo
+    inner join marca ma on ma.cd_marca = mo.cd_marca
+    group by ds_modelo, ds_marca
+    having count(*) = 
+		(select max(N.Num) from 
+			(select count(*) as Num from veiculo group by veiculo.cd_modelo) AS N);
+
     
