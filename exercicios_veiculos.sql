@@ -205,4 +205,23 @@ select ds_modelo, ds_marca from veiculo ve
 		(select max(N.Num) from 
 			(select count(*) as Num from veiculo group by veiculo.cd_modelo) AS N);
 
+-- 14 Criação de uma VIEW para exibir as informações do veículo (descrição do modelo,
+-- descrição da marca, ano de fabricação, ano de modelo e combustível).
+create view info_veiculos as
+select ds_modelo, ds_marca, nr_ano_fab, nr_ano_mod, ds_combustivel from veiculo v
+	inner join modelo mo on v.cd_modelo = mo.cd_modelo
+    inner join marca ma on mo.cd_marca = ma.cd_marca
+    inner join veiculo_combustivel vc on vc.nr_placa = v.nr_placa
+    inner join combustivel c on c.cd_combustivel = vc.cd_combustivel;
+select * from info_veiculos;
+
+-- 15 Recuperar a descrição do modelo dos veículos que são movidos por mais de um combustível.
+select ds_modelo from modelo mo
+	inner join veiculo ve on mo.cd_modelo = ve.cd_modelo
+    where ve.nr_placa in 
+		(select nr_placa from veiculo_combustivel vc
+			inner join combustivel cb on vc.cd_combustivel = cb.cd_combustivel
+			group by nr_placa
+			having count(*) > 1);
+
     
