@@ -224,4 +224,17 @@ select ds_modelo from modelo mo
 			group by nr_placa
 			having count(*) > 1);
 
-    
+-- 16 Recuperar a descrição do modelo dos veículos que são movidos por mais de um
+-- combustível sendo um dos combustíveis deve ser “GNV”.
+select ds_modelo from modelo mo
+	inner join veiculo ve on mo.cd_modelo = ve.cd_modelo
+    where ve.nr_placa in 
+		(select nr_placa from veiculo_combustivel vc
+			inner join combustivel cb on vc.cd_combustivel = cb.cd_combustivel
+			group by nr_placa
+			having count(*) > 1)
+		and ve.nr_placa in 
+			(select nr_placa from veiculo_combustivel vc
+				inner join combustivel cb on vc.cd_combustivel = cb.cd_combustivel
+				where cb.ds_combustivel like 'gnv');
+
